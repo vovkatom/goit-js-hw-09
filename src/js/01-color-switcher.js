@@ -12,7 +12,10 @@ startButton.addEventListener('click', () => {
     startButton.disabled = true;
     stopButton.disabled = false;
     intervalId = setInterval(() => {
-      document.body.style.backgroundColor = getRandomHexColor();
+      const randomColor = getRandomHexColor();
+      document.body.style.backgroundColor = randomColor;
+      // Оновлюємо поточний колір фону у локальному сховищі
+      localStorage.setItem('color-switcher', randomColor);
     }, 1000);
   }
 });
@@ -23,5 +26,13 @@ stopButton.addEventListener('click', () => {
     intervalId = null;
     startButton.disabled = false;
     stopButton.disabled = true;
+  }
+});
+
+// Перевіряємо і встановлюємо поточний колір
+window.addEventListener('load', () => {
+  const savedColor = localStorage.getItem('color-switcher');
+  if (savedColor) {
+    document.body.style.backgroundColor = savedColor;
   }
 });
